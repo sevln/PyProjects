@@ -1,3 +1,7 @@
+# CHANGE CALCULATOR - program that calculates change required in quarters, dimes, nickels, and pennies.
+# 1. User inputs cost of item and amount paid
+# 2. Program will output change required and the number of quarters, dimes, nickels, and pennies needed.
+
 import math
 
 loop = True
@@ -6,7 +10,7 @@ while loop:
     cost = float(input("Please enter the cost of the item: "))
     paid = float(input("Please enter the amount paid: "))
 
-    while paid < cost:
+    while paid < cost:      # catches if amount is less than cost of item
         print('\nSorry, you still owe $%.2f! Please try again.' % (cost - paid))
         paid = float(input("\nPlease enter the amount paid: "))
 
@@ -29,6 +33,7 @@ while loop:
 
                         p = math.floor(round(diff, 2) / 0.01)
 
+                        # prints out change required and amount of each coin type to build the change
                         print('\nChange owing: $%.2f' % (paid - cost))
                         print('Requires: %d quarter(s), %d dime(s), %d nickel(s), and %d penny(ies).\n' % (q, d, n, p))
 
