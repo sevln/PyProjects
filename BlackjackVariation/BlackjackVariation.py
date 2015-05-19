@@ -73,7 +73,8 @@ def check_score():
     total = sum(drawn)
     if total >= 21:  # if user has bust, round ends
         return -1
-
+    
+    # if user hasn't bust, they can choose to draw another card
     else:
         ans = input("Draw again? (Y/N)")
         if ans == 'N':
@@ -114,7 +115,7 @@ def main():
 
     print("GAME OVER!\nFINAL SCORE: %d" % game_score)
 
-# calling main()
+# calling main() function
 if __name__ == "__main__":
     main()
 
