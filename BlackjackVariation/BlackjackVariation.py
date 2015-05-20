@@ -1,9 +1,9 @@
 # BLACKJACK VARIATION - 1 PLAYER
 # Game score will begin at 100, and the game will last for five rounds
 # At the beginning of the round, the player is given two random cards from a deck and they will be added together to make the round score
-# Player can choose to draw another card to try to get their round score closer to 21, or they can end the round 
+# Player can choose to draw another card to try to get their round score closer to 21, or they can end the round
 # The player can draw as many cards as they want until they end the round or their round score exceeds 21.
-# At the end of the round, the difference between 21 and the round score is subtracted from the game score, and then the next round begins 
+# At the end of the round, the difference between 21 and the round score is subtracted from the game score, and then the next round begins
 # After the five rounds, the player is given their total score and the game is over.
 # If player busts, 21 is subtracted from their total score.
 
@@ -24,9 +24,12 @@ def rebuild():
     for i in range(1, 14):
         deck.append(4)
 
-# DEBUGGING        
-# for num in deck:
-#     print(num)
+# DEBUGGING FUNCTION
+def print_deck():
+    print("DECK:")
+    for num in deck:
+        print(num)
+    print("\n")
 
 # choosing random cards from deck
 # input number of times a random card is drawn
@@ -37,48 +40,59 @@ def draw_card(times):
     # tells player the face card drawn
     def face_card(n):
         if n == 11:
-            print("You draw a JACK.\n")
+            print("It's a JACK.\n")
 
         elif n == 12:
-            print("You draw a QUEEN.\n")
+            print("It's a QUEEN.\n")
 
         elif n == 13:
-            print("You draw a KING.\n")
+            print("It's a KING.\n")
 
-        # drawing card(s)
-        for i in range(1, (times + 1)):
-            print("You draw a card.\n")
+    # drawing card(s)
+    for i in range(1, (times + 1)):
+        print("You draw a card.\n")
 
-            card = random.randint(1, 13)  # picking card value - the card drawn
+        card = random.randint(1, 13)  # picking card value - the card drawn
+        print(card)     # DEBUGGING
 
-            # checks if card value has cards left, else draws value again until a card can be drawn
-            while deck[card] == 0:
-                card = random.randint(1, 13)
+        # checks if card value has cards left, else draws value again until a card can be drawn
+        if deck[card - 1] == 0:
+            card = random.randint(1, 13)
 
-            deck[card] -= 1     # removing quantity left of card value drawn from deck
+        deck[card - 1] -= 1     # removing quantity left of card value drawn from deck
 
-            # insert different points based on card drawn
-            # if a face card, set point value to 10
-            if 9 < card < 14:
-                drawn.append(10)
-                face_card(card)  # tell player which face card has been drawn
+        # insert different points based on card drawn
+        # if a face card, set point value to 10
+        if 9 < card < 14:
+            drawn.append(10)
+            face_card(card)  # tell player which face card has been drawn
 
-            # for any other card, set value to card suit number
-            else:
-                drawn.append(card)
-                print("You draw a %d.\n" % card)
+        # for any other card, set value to card suit number
+        else:
+            drawn.append(card)
+            print("It's a %d.\n" % card)
+
+        print_deck()        # DEBUGGING
 
 # checking card value scores to see if user has bust or can redraw
 def check_score():
     total = sum(drawn)
+    # print(total)    # DEBUGGING
+
     if total >= 21:  # if user has bust, round ends
+        print("Your round score is: %d" % total)
         return -1
-    
+
     # if user hasn't bust, they can choose to draw another card
     else:
-        ans = input("Draw again? (Y/N)")
+        print("Your current round score is: %d" % total)
+        ans = input("Draw again? (Y/N): ")
+        print("\n")
+
+        print(ans)      # DEBUGGING
+
         if ans == 'N':
-            return total
+            return 0
         else:
             while ans == 'Y':
                 draw_card(1)
@@ -90,6 +104,8 @@ def main():
     game_score = 100
     round_num = 1  # initializing round number
 
+    rebuild()   # rebuilding deck at start of game
+
     while round_num < 6:    # game lasts for 5 rounds
         print("----- ROUND %d -----\n\n" % round_num)     # printing round number
 
@@ -100,7 +116,7 @@ def main():
             print("You have bust!\n|SCORE|\nRound Score: 21\nGame Score: %d\n" % game_score)
         else:
             round_score = check_score() # getting round score
-            game_score -= (21 - round_score)    # getting game score
+            game_score - (21 - round_score)    # getting game score
 
             print("You decide not to draw any more cards.\n")
             print("|SCORE|\nRound Score: %d\nGame Score: %d\n" % (round_score, game_score))
@@ -118,9 +134,3 @@ def main():
 # calling main() function
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
