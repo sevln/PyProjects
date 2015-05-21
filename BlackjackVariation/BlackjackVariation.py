@@ -59,11 +59,11 @@ def draw_card(times):
         if deck[card - 1] == 0:
             card = random.randint(1, 13)
 
-        deck[card - 1] -= 1     # removing quantity left of card value drawn from deck
+        deck[card - 1] -= 1     # updating quantity left of card value drawn from deck
 
         # insert different points based on card drawn
         # if a face card, set point value to 10
-        if 9 < card < 14:
+        if 10 < card < 14:
             drawn.append(10)
             face_card(card)  # tell player which face card has been drawn
 
@@ -79,9 +79,9 @@ def check_score():
     total = sum(drawn)
     # print(total)    # DEBUGGING
 
-    if total >= 21:  # if user has bust, round ends
-        print("Your round score is: %d" % total)
-        return -1
+    if total > 21:  # if user has bust, round ends
+        print("Oh no. You have bust! Your round score is: %d" % total)
+        return total
 
     # if user hasn't bust, they can choose to draw another card
     else:
@@ -89,14 +89,13 @@ def check_score():
         ans = input("Draw again? (Y/N): ")
         print("\n")
 
-        print(ans)      # DEBUGGING
+        # print(ans)      # DEBUGGING
 
         if ans == 'N':
-            return 0
-        else:
-            while ans == 'Y':
-                draw_card(1)
-                check_score()
+            return total
+        elif ans == 'Y':
+            draw_card(1)
+            check_score()
 
 # main function
 def main():
@@ -111,13 +110,14 @@ def main():
 
         draw_card(2)     # drawing two initial cards
 
-        if check_score() == -1:  # checking user score and round status
-            game_score -= 21    # getting game score
-            print("You have bust!\n|SCORE|\nRound Score: 21\nGame Score: %d\n" % game_score)
-        else:
-            round_score = check_score() # getting round score
-            game_score - (21 - round_score)    # getting game score
+        round_score = check_score()
 
+        if round_score > 21:  # checking user score and round status
+            game_score -= 21    # getting game score
+            print("|SCORE|\nRound Score: 21\nGame Score: %d\n" % game_score)
+
+        elif round_score <= 21:
+            game_score -= (21 - round_score)  # getting game score
             print("You decide not to draw any more cards.\n")
             print("|SCORE|\nRound Score: %d\nGame Score: %d\n" % (round_score, game_score))
 
@@ -125,9 +125,10 @@ def main():
 
         if round_num == 5:
             print("Let's move onto the final round.\n\n")
+            continue
         else:
             print("Let's move onto the next round.\n\n")
-        continue
+            continue
 
     print("GAME OVER!\nFINAL SCORE: %d" % game_score)
 
