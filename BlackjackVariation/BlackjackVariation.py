@@ -50,10 +50,10 @@ def draw_card(times):
 
     # drawing card(s)
     for i in range(1, (times + 1)):
-        print("You draw a card.\n")
+        print("You draw a card.")
 
         card = random.randint(1, 13)  # picking card value - the card drawn
-        print(card)     # DEBUGGING
+        # print(card)     # DEBUGGING
 
         # checks if card value has cards left, else draws value again until a card can be drawn
         if deck[card - 1] == 0:
@@ -72,30 +72,26 @@ def draw_card(times):
             drawn.append(card)
             print("It's a %d.\n" % card)
 
-        print_deck()        # DEBUGGING
+        # print_deck()        # DEBUGGING
 
 # checking card value scores to see if user has bust or can redraw
 def check_score():
     total = sum(drawn)
-    # print(total)    # DEBUGGING
 
     if total > 21:  # if user has bust, round ends
-        print("Oh no. You have bust! Your round score is: %d" % total)
-        return total
+        print("Oh no. You have bust!\n")
 
     # if user hasn't bust, they can choose to draw another card
     else:
         print("Your current round score is: %d" % total)
-        ans = input("Draw again? (Y/N): ")
+        ans = str.lower(input("Draw again? (Y/N): "))
         print("\n")
 
-        # print(ans)      # DEBUGGING
-
-        if ans == 'N':
-            return total
-        elif ans == 'Y':
+        if ans == 'y':
             draw_card(1)
             check_score()
+
+    return sum(drawn)       # returns updated card value total after redraws
 
 # main function
 def main():
@@ -107,6 +103,7 @@ def main():
 
     while round_num < 6:    # game lasts for 5 rounds
         print("----- ROUND %d -----\n\n" % round_num)     # printing round number
+        round_score = 0     # resetting round score
 
         draw_card(2)     # drawing two initial cards
 
@@ -114,23 +111,25 @@ def main():
 
         if round_score > 21:  # checking user score and round status
             game_score -= 21    # getting game score
-            print("|SCORE|\nRound Score: 21\nGame Score: %d\n" % game_score)
+            print("|SCORES|\nRound Score: 21\nGame Score: %d\n" % game_score)
 
         elif round_score <= 21:
             game_score -= (21 - round_score)  # getting game score
             print("You decide not to draw any more cards.\n")
-            print("|SCORE|\nRound Score: %d\nGame Score: %d\n" % (round_score, game_score))
+            print("|SCORES|\nRound Score: %d\nGame Score: %d\n" % (round_score, game_score))
 
         round_num += 1  # go to next round
+
+        drawn[:] = []       # clears cards drawn
 
         if round_num == 5:
             print("Let's move onto the final round.\n\n")
             continue
-        else:
+        elif 0 < round_num < 5:
             print("Let's move onto the next round.\n\n")
             continue
 
-    print("GAME OVER!\nFINAL SCORE: %d" % game_score)
+    print("----- GAME OVER -----\nFINAL SCORE: %d" % game_score)
 
 # calling main() function
 if __name__ == "__main__":
