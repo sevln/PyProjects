@@ -32,7 +32,7 @@ def factor(n):
             # debug(fact1)    # DEBUGGING
 
             if x != i:          # adding large factor only if not a square factor
-                fact2.append(int(n / i))
+                fact2.append(x)
                 # debug(fact2)      # DEBUGGING
 
     str1 = ','.join(str(f) for f in fact1)
