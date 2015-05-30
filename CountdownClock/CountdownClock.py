@@ -10,22 +10,27 @@
 import time
 import datetime
 
+# DEBUGGING FUNCTION
+def debug(list):
+    for item in list:
+        print(item)
+    return
+
 # executes and prints countdown
 def countdown():
-
     return
 
 # gets datetime from user for countdown
 def get_datetime():
+    ask = ["Month ", "Day", "Year", "Hour", "Minute"]  # list containing strings to fill in the input statement
     datetime = []   # datetime list
 
     print("Enter the starting date and/or time for your countdown...")
-    month = input("Month: ")
-    day = input("Day: ")
-    year = input("Year: ")
-    hour = input("Hour(s): ")
-    minute = input("Minute(s): ")
+    for word in ask:
+        ans = input("%s: " % word)
+        datetime.append(ans)
 
+    debug(datetime)
     return
 
 # main function
