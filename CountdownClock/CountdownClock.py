@@ -20,9 +20,12 @@ def debug(list):
 def countdown():
     return
 
+# converts month (if in text) to numerical
+def convert_month():
+
 # gets datetime from user for countdown
 def get_datetime():
-    ask = ["Month ", "Day", "Year", "Hour", "Minute"]  # list containing strings to fill in the input statement
+    ask = ["Year", "Month", "Day", "Hour (24-Hour)", "Minute"]  # list containing strings to fill in the input statement
     datetime = []   # datetime list
 
     print("Enter the starting date and/or time for your countdown...")
@@ -30,6 +33,7 @@ def get_datetime():
         ans = input("%s: " % word)
         datetime.append(ans)
 
+    # DEBUGGING
     debug(datetime)
     return
 
