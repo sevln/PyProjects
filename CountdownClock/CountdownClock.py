@@ -22,6 +22,7 @@ def countdown():
 
 # converts month (if in text) to numerical
 def convert_month():
+    return
 
 # gets datetime from user for countdown
 def get_datetime():
